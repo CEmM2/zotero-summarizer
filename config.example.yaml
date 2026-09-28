@@ -1,0 +1,209 @@
+# zotero-summarizer configuration
+# Copy to config.yaml and edit with your paths
+
+# -- Paths -------------------------------------------------------------------
+
+# Better BibTeX auto-updating JSON export
+bbt_json: ~/OneDrive/ObsidianNotes/ZotSums/zsumbib.json
+
+# Zotero SQLite database (read-only, for collection structure)
+# Cross-platform note: Zotero 7 uses ~/Zotero/ on macOS, Linux, and Windows.
+# Python's Path("~/Zotero/...").expanduser() resolves correctly on all three
+# platforms (Windows expands ~ to C:\Users\<name>\).
+zotero_sqlite: ~/Zotero/zotero.sqlite
+
+# Base path for linked PDFs (ZotMoov destination)
+# Only needed if BBT JSON contains relative paths; leave empty if paths are absolute
+zotero_pdf_base: "" #~/OneDrive/zotero/
+
+# Output Obsidian vault directory
+vault_output: ~/OneDrive/ObsidianNotes/ZotSums
+
+# Cache directory (paper cards + digests + membership snapshot)
+cache_dir: ~/OneDrive/ObsidianNotes/ZotSums/cache
+
+# -- Scope --------------------------------------------------------------------
+
+# Collections to process. Use collection names as they appear in Zotero.
+# Empty list = process all collections.
+collections:
+  # - "fftCP"
+  # - "HEA"
+  # - "PFfrac"
+  # - "CMC"
+  - "SEAMAC"
+  # - "Graphs"
+  # - "Jaxstuff"
+  # - "taichi"
+  # - "UQ"
+  # - "Plasticity"
+  # - "PF"
+  # - "verify"
+
+# -- Extraction ---------------------------------------------------------------
+
+# Number of pages to extract from the beginning of each PDF
+max_first_pages: 3
+
+# Number of pages to extract from the end of each PDF
+max_last_pages: 3
+
+# Maximum characters to send to the LLM (roughly 4 chars = 1 token)
+max_text_chars: 24000
+
+# PDFs with less extracted text than this are flagged as degraded
+min_text_chars: 500
+
+# Avoid books and conference proceedings with huge PDFs that break the LLM input limits; these can be processed separately if desired
+
+max_pdf_pages: 130
+
+# -- LLM ---------------------------------------------------------------------
+
+llm:
+  # Active provider: "anthropic", "openai_compat", "codex_exec", or "gemini_cli"
+  provider: openai_compat
+
+  anthropic:
+    model: claude-sonnet-4-6
+    api_key_env: ANTHROPIC_API_KEY # reads API key from this env var
+    max_tokens_card: 4096
+    max_tokens_digest: 8192
+
+  # OpenAI-compatible endpoint (LM Studio, mlx-lm serve, Ollama, vLLM, etc.)
+  openai_compat:
+    base_url: http://localhost:1234/v1 # LM Studio default
+    model: qwen/qwen3.6-35b-a3b
+    api_key: lm-studio # most local servers ignore this but SDK requires it
+    max_tokens_card: 4096
+    max_tokens_digest: 8192
+    enable_thinking: true
+    # Enable JSON Schema structured output via response_format API.
+    # Requires a compatible server (LM Studio, vLLM). When true, cards and
+    # digests use schema-validated JSON instead of prompt-engineered freeform.
+    structured_output: false
+    # Sampling parameters (omit or set to null to use server defaults)
+    temperature: 0.25
+    top_p: 0.95
+    top_k: 0.6
+    seed: 8
+  
+  routing:
+    cards: openai_compat
+    digests: openai_compat
+    redigest: anthropic
+  
+  codex_exec:
+    model: gpt-5.4                       # optional; leave empty to use Codex CLI default
+    binary: codex
+    sandbox: read-only
+    max_tokens_card: 4096
+    max_tokens_digest: 8192
+
+  gemini_cli: 
+    model: ""                            # optional; leave empty to let Gemini CLI auto-select
+    binary: gemini
+    approval_mode: yolo                  # "yolo" auto-approves (safe: zsum uses no tools)
+    max_tokens_card: 4096
+    max_tokens_digest: 8192
+
+# -- Output -------------------------------------------------------------------
+
+# Generate individual paper notes in vault/Papers/
+generate_paper_notes: true
+
+# -- Versioning ---------------------------------------------------------------
+
+# Bump to invalidate cached paper cards and force regeneration
+prompt_version: 1
+# -- Citations (optional) -----------------------------------------------------
+
+citations:
+  # Turn the whole stage off to skip all network calls
+  enabled: true
+
+  # Primary provider: currently only "openalex" is supported
+  provider: openalex
+
+  # Fallback if the primary can't find a record: "semantic_scholar" or ""
+  fallback: semantic_scholar
+
+  # Identifies you to OpenAlex's polite pool (recommended, no auth)
+  email: ""
+
+  # Semantic Scholar API key (optional; raises rate limit)
+  api_key: ""
+
+  # Delay in seconds between HTTP requests
+  rate_limit_delay: 0.1
+
+  # Max age of a cached citation record before refetch
+  max_age_days: 30
+
+  # Default N for `zsum citations --top N` and the "Most Cited Papers" section
+  top_n: 10
+
+  # HTTP timeout (seconds)
+  timeout_seconds: 10.0
+
+# -- Structure Advisory (optional) --------------------------------------------
+
+restructure:
+  # Max characters of each collection digest included in the advisor's prompt
+  max_digest_chars: 2048
+
+# -- Extraction strategy (optional) -------------------------------------------
+
+# Global extraction strategy applied to every paper.
+#   pages       — first N + last M pages (legacy default; uses max_first_pages
+#                 / max_last_pages above).
+#   sections    — fuzzy/TOC-based section extraction (abstract, introduction,
+#                 methods, ...). Falls back to "pages" when not enough target
+#                 sections are detected; the resulting card is tagged
+#                 extraction_method=fallback_pages.
+#   notebooklm  — route extraction + card/digest generation through the NLM
+#                 CLI (see the notebooklm block below). Per-paper failures
+#                 fall back to local "pages" extraction + local LLM card
+#                 generation with extraction_method=fallback_pages.
+# Omit this block entirely to keep the legacy behavior (mode: pages).
+extraction:
+  # PDF backend used to read PDFs:
+  #   pdfminer — permissive default (pdfminer.six + pypdf), always installed.
+  #   pymupdf  — optional, AGPL-licensed; requires
+  #              uv tool install --reinstall "zotero-summarizer[pymupdf]"
+  backend: pdfminer
+  mode: pages
+  target_sections:
+    - abstract
+    - introduction
+    - methods
+    - materials
+    - results
+    - discussion
+    - conclusion
+    - summary
+  # rapidfuzz partial-ratio threshold (0-100) for matching noisy headings to
+  # the canonical names above. Raise for stricter matches; lower if many real
+  # section headers are missed.
+  fuzzy_threshold: 80
+
+# -- NotebookLM integration (only used when extraction.mode == notebooklm) ----
+
+notebooklm:
+  # Maximum sources uploaded per NotebookLM notebook. Larger collections are
+  # split across multiple notebooks transparently.
+  max_sources_per_notebook: 30
+  # Timeout for NotebookLM query calls (seconds).
+  query_timeout: 120.0
+  # Timeout for NotebookLM source uploads (seconds).
+  upload_timeout: 600.0
+  # Delete created NotebookLM notebooks after processing. Leave false during
+  # iteration so notebooks can be re-queried without re-uploading PDFs.
+  cleanup: false
+  # When true, route the NotebookLM response through the local LLM to extract
+  # structured card JSON. When false, parse the NotebookLM response directly.
+  # The local LLM (cards stage) must be configured if this is true.
+  parse_locally: false
+  # Optional `nlm` CLI profile (see `nlm login switch`). Leave empty for the
+  # active default profile.
+  profile: ""

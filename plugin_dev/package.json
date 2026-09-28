@@ -1,0 +1,31 @@
+{
+  "name": "obsidian-zsum",
+  "version": "1.0.0",
+  "description": "UI for the zotero-summarizer pipeline",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit --skipLibCheck && node esbuild.config.mjs production",
+    "test": "npm run test:config && npm run test:index-reader && npm run test:view && npm run test:runner",
+    "test:config": "node --experimental-strip-types --test src/config.test.mjs",
+    "test:index-reader": "node --experimental-strip-types --test src/index-reader.test.mjs",
+    "test:view": "node --experimental-strip-types --test src/view-model.test.mjs",
+    "test:runner": "node --experimental-strip-types --test src/runner.test.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "yaml": "^2.8.3"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^16.0.0",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "0.17.3",
+    "obsidian": "latest",
+    "tslib": "^2.4.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+.venv/
+
+# uv
+uv.lock
+.venv
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project runtime
+cache/
+vault/
+
+# Config (contains local paths)
+config.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+.gitnexus
+
+# MkDocs build output
+site/
+
+# Claude Code local state
+.claude/worktrees/
+.claude/skills/generated/

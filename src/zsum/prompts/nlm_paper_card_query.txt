@@ -1,0 +1,28 @@
+You are working inside NotebookLM on a single academic paper source.
+
+Focus only on the source with NotebookLM source ID `{source_id}`.
+
+Paper metadata for cross-checking:
+- citekey: {citekey}
+- title: {title}
+- authors: {authors}
+- year: {year}
+- venue: {venue}
+- doi: {doi}
+
+Return ONLY a valid JSON object containing exactly these keys. Every key must be present even when the value is empty or defaulted:
+- problem: string
+- methods: array of strings
+- key_findings: array of strings
+- limitations: array of strings
+- keywords: array of strings
+- paper_type: one of research, review, survey, meta-analysis, tutorial
+
+Rules:
+- Use only evidence grounded in the requested source.
+- Do not use information from any other source in the notebook.
+- If a field is unsupported, use "unknown" for `problem`, `[]` for list fields, and "research" for `paper_type`.
+- Keep methods, findings, and limitations concise and factual.
+- Prefer 3-8 specific technical keywords.
+- Prefer specific technical methods over generic workflow steps, and prefer quantitative findings when the source gives numbers.
+- Return valid JSON only; no markdown fences or commentary.

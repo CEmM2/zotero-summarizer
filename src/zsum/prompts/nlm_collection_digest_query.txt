@@ -1,0 +1,31 @@
+You are preparing a collection digest inside NotebookLM.
+
+Collection metadata:
+- name: {collection_name}
+- path: {collection_path}
+- notebook purpose: {notebook_purpose}
+- notebook part: {part_index}/{total_parts}
+- source count in this notebook: {source_count}
+
+Sources currently uploaded to this notebook:
+{source_titles}
+
+Write Markdown with exactly these sections:
+## Summary
+## Key Themes
+## Common Methods
+## Gaps and Limitations
+
+Rules:
+- Synthesize only the sources uploaded in this notebook.
+- Some sources may be direct paper PDFs, child-collection digests, or intermediate partial digests.
+- If this notebook is only one part of a larger collection, summarize only this notebook's material and avoid speculation about sources that are not present.
+- Every paper citation must use the exact Obsidian wikilink form [[@citekey]].
+- Every factual claim in ## Summary must include at least one supporting [[@citekey]] citation.
+- Use only citekeys that appear in the uploaded source list or in existing [[@citekey]] links inside child or partial digest sources. Do not invent, guess, or normalize citekeys.
+- When summarizing child-digest or partial-digest sources, preserve paper-level [[@citekey]] links already present in those sources.
+- If a child digest source is present, treat it as a child-collection synthesis rather than as a paper.
+- Prefer synthesis over enumeration.
+- Use bullet lists under ## Key Themes, ## Common Methods, and ## Gaps and Limitations.
+- Keep the total output under 800 words.
+- Return Markdown only, with no preamble or commentary.

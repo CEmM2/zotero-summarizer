@@ -1,0 +1,114 @@
+site_name: Zotero Summarizer
+site_description: Generate AI-powered summaries of your Zotero library as an Obsidian vault
+site_url: https://cemm2.github.io/zotero-summarizer/
+repo_url: https://github.com/CEmM2/zotero-summarizer
+repo_name: CEmM2/zotero-summarizer
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/book-open-variant
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/CEmM2/zotero-summarizer
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - Configuration: getting-started/configuration.md
+  - User Guide:
+      - Pipeline Overview: guide/pipeline.md
+      - CLI Commands: guide/commands.md
+      - Caching & Incremental Runs: guide/caching.md
+      - LLM Providers & Routing: guide/providers.md
+      - Prompt Customization: guide/prompts.md
+      - Citation Counts: guide/citations.md
+      - Structure Advisory: guide/restructure.md
+      - Workflows: guide/workflows.md
+  - Obsidian Plugin:
+      - Overview & Installation: plugin/index.md
+      - UI Walkthrough: plugin/ui.md
+      - Troubleshooting: plugin/troubleshooting.md
+  - Reference:
+      - Architecture: reference/architecture.md
+      - Data Models: reference/models.md
+      - Configuration Reference: reference/config.md
+      - Cache Layout: reference/cache-layout.md
+  - Development:
+      - Developer Guide: development/developer-guide.md
+      - Changelog: development/changelog.md

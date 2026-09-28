@@ -1,0 +1,1087 @@
+/* obsidian-zsum styles */
+
+.zsum-view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-interface);
+  overflow: hidden;
+}
+
+.zsum-hidden { display: none !important; }
+
+.zsum-tabs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 0;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+.zsum-tab-group {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+.zsum-plugin-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 6px;
+  min-width: 0;
+}
+.zsum-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+.zsum-meta-chip-warn {
+  color: var(--color-yellow);
+  border-color: color-mix(in srgb, var(--color-yellow) 28%, var(--background-modifier-border));
+  background: color-mix(in srgb, var(--color-yellow) 9%, transparent);
+}
+.zsum-meta-settings-btn { font-size: 14px; }
+@media (max-width: 640px) {
+  .zsum-meta-chip { display: none; }
+}
+.zsum-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.zsum-tab-btn:hover { color: var(--text-normal); }
+.zsum-tab-btn.is-active {
+  background: var(--background-primary);
+  border-color: var(--background-modifier-border);
+  color: var(--text-normal);
+}
+.zsum-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: color-mix(in srgb, var(--color-yellow) 18%, transparent);
+  color: var(--color-yellow);
+}
+
+.zsum-tab-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Status Bar (three regions — brand | stats | live-box) */
+.zsum-status-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+
+/* Brand block */
+.zsum-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 154px;
+}
+.zsum-brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--interactive-accent) 17%, transparent);
+  color: var(--interactive-accent);
+  font-family: var(--font-monospace);
+  font-weight: 800;
+  border: 1px solid color-mix(in srgb, var(--interactive-accent) 34%, transparent);
+}
+.zsum-brand-text { display: flex; flex-direction: column; }
+.zsum-brand-name {
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  font-size: 13px;
+}
+.zsum-brand-path {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+/* Stat cards */
+.zsum-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+}
+.zsum-stat {
+  min-width: 72px;
+  padding: 5px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.09);
+  display: flex;
+  flex-direction: column;
+}
+.zsum-stat-val {
+  font-family: var(--font-monospace);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.zsum-stat-label {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.zsum-stat-ok .zsum-stat-val { color: var(--color-green); }
+.zsum-stat-warn .zsum-stat-val { color: var(--color-yellow); }
+.zsum-stat-fallback .zsum-stat-val { color: var(--color-orange, #d98c00); }
+.zsum-stat-muted .zsum-stat-val { color: var(--text-muted); }
+.zsum-stat-bad .zsum-stat-val { color: var(--text-error); }
+
+/* Live box */
+.zsum-live-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  min-width: 110px;
+}
+.zsum-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  font-weight: 700;
+}
+.zsum-live-ok { color: var(--color-green); }
+.zsum-live-stale { color: var(--color-yellow); }
+.zsum-bbt-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block;
+}
+.zsum-bbt-dot.zsum-live {
+  animation: zsum-pulse 1.4s ease-in-out infinite;
+}
+.zsum-timestamp {
+  color: var(--text-faint);
+  font-family: var(--font-monospace);
+  font-size: 10px;
+}
+
+/* Narrow-panel collapse: brand + stats + live-box stack vertically. */
+@media (max-width: 880px) {
+  .zsum-status-bar {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  .zsum-live-box { align-items: flex-start; }
+}
+@keyframes zsum-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.45);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-green) 45%, transparent);
+  }
+  70% { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Progress bar */
+.zsum-progress-bar {
+  height: 2px;
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+.zsum-progress-inner {
+  height: 100%;
+  width: 30%;
+  background: var(--interactive-accent);
+  animation: zsum-progress 1.2s infinite linear;
+}
+@keyframes zsum-progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+/* Content layout */
+.zsum-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.zsum-tree-panel {
+  width: 280px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--background-modifier-border);
+}
+.zsum-papers-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.zsum-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 6px 12px;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.zsum-panel-header-title { line-height: 1; }
+.zsum-tree-expand-all {
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 8px;
+}
+
+/* Tree */
+.zsum-tree-scroll { flex: 1; overflow-y: auto; }
+.zsum-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  user-select: none;
+}
+.zsum-tree-item:hover { background: var(--background-modifier-hover); }
+.zsum-tree-item.is-selected { background: var(--background-modifier-active-hover); }
+.zsum-tree-toggle { width: 14px; display: inline-flex; align-items: center; }
+.zsum-tree-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zsum-tree-count {
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.zsum-tree-root { font-weight: 600; border-bottom: 1px solid var(--background-modifier-border); }
+
+.zsum-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block; flex-shrink: 0;
+}
+.zsum-dot-ok { background: var(--color-green); }
+.zsum-dot-stale { background: var(--color-yellow); }
+.zsum-dot-missing { background: var(--background-modifier-border); }
+
+.zsum-legend {
+  padding: 8px 12px;
+  border-top: 1px solid var(--background-modifier-border);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.zsum-legend-item { display: inline-flex; align-items: center; gap: 4px; }
+
+/* Papers panel */
+.zsum-papers-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.zsum-papers-title { font-size: 14px; font-weight: 600; }
+.zsum-papers-subtitle { margin-left: 10px; font-weight: normal; color: var(--text-muted); font-size: 12px; }
+.zsum-papers-actions { display: flex; gap: 6px; align-items: center; }
+.zsum-search-box {
+  width: 180px;
+  height: 28px;
+  padding: 0 9px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+  font-size: 12px;
+  outline: none;
+}
+.zsum-search-box:focus {
+  border-color: var(--interactive-accent);
+}
+.zsum-search-box::placeholder { color: var(--text-faint); }
+.zsum-icon-btn {
+  background: transparent;
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.zsum-icon-btn:hover { background: var(--background-modifier-hover); }
+
+.zsum-col-header, .zsum-paper-row {
+  display: grid;
+  grid-template-columns: 30px minmax(160px, 1.4fr) 90px 58px minmax(100px, 0.7fr) 74px 82px;
+  gap: 8px;
+  padding: 6px 14px;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .zsum-col-header, .zsum-paper-row {
+    grid-template-columns: 28px minmax(130px, 1fr) 72px 58px 74px;
+  }
+  /* Hide Venue (5th) and Citations (6th) on narrow widths; keep Type + Card */
+  .zsum-col-header > :nth-child(5),
+  .zsum-col-header > :nth-child(6),
+  .zsum-paper-row > :nth-child(5),
+  .zsum-paper-row > :nth-child(6) {
+    display: none;
+  }
+}
+.zsum-col-header {
+  position: sticky; top: 0;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.zsum-papers-scroll { flex: 1; overflow-y: auto; }
+.zsum-paper-row { cursor: pointer; font-size: 13px; border-bottom: 1px solid var(--background-modifier-border); }
+.zsum-paper-row:hover { background: var(--background-modifier-hover); }
+.zsum-paper-status { text-align: center; font-family: var(--font-monospace); }
+.zsum-ok { color: var(--color-green); }
+.zsum-warn { color: var(--color-yellow); }
+.zsum-fallback { color: var(--color-orange, #d98c00); }
+.zsum-muted { color: var(--text-muted); }
+.zsum-citekey { font-family: var(--font-monospace); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zsum-paper-year, .zsum-paper-venue { color: var(--text-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.zsum-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-align: center;
+  background: var(--background-modifier-border);
+  color: var(--text-muted);
+}
+.zsum-badge-cached { background: var(--color-green); color: var(--text-on-accent, #fff); }
+.zsum-badge-degraded { background: var(--color-yellow); color: var(--text-on-accent, #000); }
+.zsum-badge-fallback { background: var(--color-orange, #d98c00); color: var(--text-on-accent, #fff); }
+
+/* Paper type pill — own column, four variants. Always rendered so the
+   grid template stays stable across rows. */
+.zsum-type-pill-cell {
+  min-width: 0;
+}
+.zsum-type-pill {
+  display: inline-block;
+  max-width: 100%;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-monospace);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zsum-type-pill-research {
+  color: var(--text-faint);
+  background: rgba(255, 255, 255, 0.04);
+}
+.zsum-type-pill-review {
+  color: var(--color-purple, #b69cff);
+  background: color-mix(in srgb, var(--color-purple, #b69cff) 14%, transparent);
+}
+.zsum-type-pill-survey {
+  color: var(--color-cyan, #5fd3c6);
+  background: color-mix(in srgb, var(--color-cyan, #5fd3c6) 14%, transparent);
+}
+.zsum-type-pill-meta {
+  color: var(--color-yellow);
+  background: color-mix(in srgb, var(--color-yellow) 14%, transparent);
+}
+
+/* Controls */
+.zsum-controls {
+  border-top: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  max-height: 45%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.zsum-controls-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.zsum-controls-title {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+.zsum-controls-cost {
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zsum-controls-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.zsum-force-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.zsum-force-toggle input { accent-color: var(--interactive-accent); }
+.zsum-clear-cache-btn {
+  color: var(--text-error);
+}
+.zsum-clear-cache-btn:hover {
+  border-color: var(--text-error);
+  background: color-mix(in srgb, var(--text-error) 12%, transparent);
+}
+.zsum-controls-body {
+  display: grid;
+  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  min-height: 0;
+  flex: 1;
+}
+.zsum-stage-pad {
+  border-right: 1px solid var(--background-modifier-border);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: auto;
+  padding: 4px 0;
+}
+.zsum-stage-section { padding: 8px 12px 0; }
+.zsum-stage-section-title {
+  color: var(--text-faint);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+.zsum-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.zsum-stage-btn {
+  height: 38px;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  background: var(--interactive-normal);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  min-width: 0;
+  text-align: left;
+}
+.zsum-stage-btn:hover:not(:disabled) {
+  background: var(--interactive-hover);
+  border-color: var(--background-modifier-border-hover, var(--background-modifier-border));
+}
+.zsum-stage-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.zsum-stage-icon {
+  width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  font-weight: 900;
+}
+.zsum-stage-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 12px;
+}
+/* Variants */
+.zsum-stage-btn-primary {
+  color: var(--interactive-accent);
+  border-color: color-mix(in srgb, var(--interactive-accent) 40%, var(--background-modifier-border));
+  background: color-mix(in srgb, var(--interactive-accent) 12%, var(--interactive-normal));
+}
+.zsum-stage-btn-llm {
+  border-color: color-mix(in srgb, var(--color-purple, #b69cff) 32%, var(--background-modifier-border));
+  color: var(--color-purple, #b69cff);
+}
+.zsum-stage-btn-danger {
+  color: var(--text-error);
+  border-color: color-mix(in srgb, var(--text-error) 35%, var(--background-modifier-border));
+}
+.zsum-stage-btn.zsum-running {
+  color: var(--color-green);
+  border-color: color-mix(in srgb, var(--color-green) 40%, var(--background-modifier-border));
+  cursor: default;
+}
+.zsum-stage-spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: zsum-spin 0.8s linear infinite;
+  display: inline-block;
+}
+@keyframes zsum-spin {
+  to { transform: rotate(360deg); }
+}
+.zsum-log-pane {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  min-height: 0;
+}
+@media (max-width: 880px) {
+  .zsum-controls-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(120px, 1fr);
+  }
+  .zsum-stage-pad {
+    border-right: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+  }
+  .zsum-stage-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Pipeline progress strip */
+.zsum-pipeline-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  align-items: center;
+  font-size: 12px;
+  font-family: var(--font-monospace);
+}
+.zsum-strip-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color-green) 15%, transparent);
+  color: var(--color-green);
+}
+.zsum-strip-check { font-weight: 600; }
+.zsum-strip-current {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--interactive-accent) 15%, transparent);
+  color: var(--interactive-accent);
+}
+.zsum-strip-spinner {
+  width: 10px; height: 10px;
+  border: 2px solid var(--text-muted);
+  border-top-color: var(--interactive-accent);
+  border-radius: 50%;
+  animation: zsum-spin 0.8s linear infinite;
+  display: inline-block;
+}
+.zsum-strip-final {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color-green) 15%, transparent);
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+.zsum-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 14px;
+  font-family: var(--font-monospace);
+  font-size: var(--font-smaller);
+  background: var(--background-primary);
+  min-height: 100px;
+}
+.zsum-log-line { white-space: pre-wrap; line-height: 1.4; }
+.zsum-log-time { color: var(--text-faint); margin-right: 6px; }
+.zsum-log-ok { color: var(--color-green); }
+.zsum-log-warn { color: var(--color-yellow); }
+.zsum-log-error { color: var(--text-error); }
+.zsum-log-info { color: var(--text-muted); }
+
+/* Empty states */
+.zsum-empty, .zsum-empty-panel {
+  color: var(--text-muted);
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.zsum-inline-warn {
+  color: var(--color-yellow);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.zsum-cost-preview {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin: 12px 0;
+  padding: 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+}
+
+.zsum-output-modal {
+  max-height: 400px;
+  overflow: auto;
+  background: var(--background-primary);
+  padding: 10px;
+  font-family: var(--font-monospace);
+  font-size: 12px;
+}
+
+.zsum-config-panel {
+  background: var(--background-primary);
+}
+.zsum-config-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+.zsum-config-header-left { min-width: 0; }
+.zsum-config-title { font-size: 15px; font-weight: 800; }
+.zsum-config-path {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Banner chips on the right side of the header (Unsaved/Comments preserved)
+   share a row with full-text banners (parse errors, save feedback). */
+.zsum-config-banners {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.zsum-config-banner-chip {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-family: var(--font-monospace);
+  white-space: nowrap;
+}
+.zsum-config-banner-chip-warn {
+  color: var(--color-yellow);
+  background: color-mix(in srgb, var(--color-yellow) 9%, transparent);
+  border-color: color-mix(in srgb, var(--color-yellow) 28%, var(--background-modifier-border));
+}
+.zsum-config-banner-chip-ok {
+  color: var(--color-green);
+  background: color-mix(in srgb, var(--color-green) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-green) 25%, var(--background-modifier-border));
+}
+.zsum-config-banner {
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  padding: 5px 10px;
+  font-size: 11px;
+  white-space: pre-wrap;
+}
+.zsum-config-banner-error {
+  background: color-mix(in srgb, var(--background-modifier-error) 14%, transparent);
+  color: var(--text-error);
+}
+.zsum-config-banner-warning {
+  background: color-mix(in srgb, var(--color-yellow) 12%, transparent);
+  color: var(--color-yellow);
+}
+.zsum-config-banner-success {
+  background: color-mix(in srgb, var(--color-green) 12%, transparent);
+  color: var(--color-green);
+}
+
+/* Body: sidebar nav (left) + active panel (right) */
+.zsum-config-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+.zsum-config-nav {
+  width: 178px;
+  flex: 0 0 178px;
+  border-right: 1px solid var(--background-modifier-border);
+  background: rgba(0, 0, 0, 0.08);
+  padding: 10px 8px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.zsum-config-nav-btn {
+  width: 100%;
+  min-height: 32px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0 10px;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 650;
+  font-size: 12px;
+}
+.zsum-config-nav-btn:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+.zsum-config-nav-btn.is-active {
+  color: var(--interactive-accent);
+  background: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--interactive-accent) 28%, var(--background-modifier-border));
+}
+.zsum-config-panels {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 14px;
+}
+.zsum-config-active-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  align-content: start;
+  gap: 12px;
+}
+.zsum-config-section {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--background-secondary) 55%, transparent);
+  overflow: hidden;
+}
+.zsum-config-section-title {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.zsum-config-field {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+  gap: 14px;
+  padding: 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.zsum-config-section .zsum-config-field:last-child {
+  border-bottom: 0;
+}
+.zsum-config-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.zsum-config-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.zsum-config-description {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.zsum-config-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.zsum-config-input,
+.zsum-config-select,
+.zsum-config-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  min-height: 34px;
+}
+.zsum-config-select {
+  /* Native chevron, comfortable hit-target, no descender clipping. */
+  appearance: auto;
+  -webkit-appearance: auto;
+  height: 34px;
+  padding-right: 28px;
+}
+.zsum-config-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+.zsum-config-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.zsum-config-preview {
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  word-break: break-all;
+}
+.zsum-config-error {
+  color: var(--text-error);
+  font-size: 12px;
+}
+.zsum-config-footer {
+  min-height: 52px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  border-top: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+.zsum-config-footer-status {
+  color: var(--text-faint);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zsum-config-footer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Settings drawer */
+.zsum-settings-drawer {
+  position: absolute;
+  top: 49px; /* below the .zsum-tabs row */
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  max-width: 92%;
+  background: var(--background-secondary);
+  border-left: 1px solid var(--background-modifier-border);
+  box-shadow: -18px 0 32px rgba(0, 0, 0, 0.28);
+  transform: translateX(100%);
+  transition: transform 180ms ease;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+.zsum-settings-drawer.is-open { transform: translateX(0); }
+.zsum-drawer-head {
+  height: 46px;
+  flex: 0 0 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+.zsum-drawer-title { font-weight: 800; font-size: 13px; }
+.zsum-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+.zsum-setting-block {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: var(--background-primary);
+}
+.zsum-setting-block-title {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.zsum-setting-row {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 9px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--background-modifier-border) 75%, transparent);
+}
+.zsum-setting-row:last-child { border-bottom: 0; }
+.zsum-setting-row label {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.zsum-setting-row input {
+  width: 100%;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  padding: 6px 8px;
+  min-width: 0;
+  font-size: 12px;
+}
+.zsum-setting-row input:focus {
+  border-color: var(--interactive-accent);
+}
+.zsum-drawer-test-btn {
+  margin: 10px;
+  width: calc(100% - 20px);
+}
+.zsum-test-output {
+  margin: 0 10px 10px;
+  padding: 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: var(--background-primary);
+  color: var(--color-green);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 160px;
+  overflow-y: auto;
+}
+.zsum-drawer-cost-preview {
+  margin: 10px;
+  padding: 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background: var(--background-primary);
+  color: var(--color-green);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .zsum-config-field { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .zsum-config-body { flex-direction: column; }
+  .zsum-config-nav {
+    width: 100%;
+    flex: 0 0 auto;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+  }
+  .zsum-config-nav-btn { width: auto; min-width: max-content; }
+  .zsum-config-header { grid-template-columns: 1fr; }
+  .zsum-config-banners { justify-content: flex-start; }
+  .zsum-config-footer { flex-direction: column; align-items: stretch; padding: 10px 16px; }
+}

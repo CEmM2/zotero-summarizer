@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-zsum",
+  "name": "Zotero Summarizer",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "UI for the zotero-summarizer pipeline",
+  "author": "",
+  "authorUrl": "",
+  "isDesktopOnly": true
+}

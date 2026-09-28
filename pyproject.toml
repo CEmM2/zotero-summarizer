@@ -1,0 +1,114 @@
+[project]
+name = "zotero-summarizer"
+version = "0.1.0"
+description = "Generate AI-powered summaries of Zotero library collections as an Obsidian vault"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Shmuel Osovski" }]
+keywords = ["zotero", "obsidian", "llm", "summarization", "literature-review", "bibliography"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "pdfminer.six>=20240706",
+    "pypdf>=5",
+    "openai>=1.50",
+    "pyyaml>=6.0.3",
+    "click>=8.1",
+    "pydantic>=2.7,<3.0",
+    "httpx>=0.27,<0.29",
+    "rapidfuzz>=3.14.5",
+]
+
+[project.optional-dependencies]
+# PyMuPDF is AGPL-3.0 (or Artifex commercial) licensed. It is deliberately NOT
+# a default dependency so the base package stays MIT-clean; opt in with:
+#   uv tool install --reinstall "zotero-summarizer[pymupdf]"
+pymupdf = [
+    "pymupdf>=1.24",
+]
+
+[project.scripts]
+zsum = "zsum.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/CEmM2/zotero-summarizer"
+Documentation = "https://cemm2.github.io/zotero-summarizer/"
+Repository = "https://github.com/CEmM2/zotero-summarizer"
+Issues = "https://github.com/CEmM2/zotero-summarizer/issues"
+Changelog = "https://github.com/CEmM2/zotero-summarizer/blob/master/CHANGELOG.md"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/zsum"]
+
+# The sdist is an allowlist: hatchling would otherwise pack every git-tracked
+# file (dev notes, agent configs, plugin sources, local config) into the
+# tarball that ends up on PyPI. Keep only what a `pip install` from source needs.
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "src/zsum",
+    "tests",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "pyproject.toml",
+]
+exclude = [
+    "tests/**/__pycache__",
+    "tests/**/*.pyc",
+]
+
+[dependency-groups]
+dev = [
+    # PyMuPDF is included in dev so the optional-backend and cross-backend
+    # tests run; the published wheel does not depend on it.
+    "pymupdf>=1.24",
+    "pytest>=9.0.2",
+    "ruff>=0.7",
+    "mypy>=1.11",
+    "mkdocs-material>=9.7.2",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "unit: fast isolated tests of a single unit",
+    "integration: tests that cross module boundaries",
+    "regression: tests that lock in a previously shipped contract",
+    "docs: tests that assert on documentation contracts (spec/README/GUIDE)",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["yaml", "fitz", "pdfminer", "pdfminer.*"]
+ignore_missing_imports = true

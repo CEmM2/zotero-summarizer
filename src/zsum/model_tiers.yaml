@@ -1,0 +1,23 @@
+# Model tiers for `zsum setup-model`.
+# Edit this file to change the available tiers without touching any code.
+# Each tier must have: model, params.
+
+small:
+  model: "nemotron-3-nano:4b"
+  params: "~1.5B"
+
+medium:
+  model: "gemma4:e4b"
+  params: "~7B"
+
+large_gemma:
+  model: "gemma4:26b"
+  params: "~14B"
+
+large_nemotron:
+  model: "nemotron-cascade-2:30b"
+  params: "~14B"
+
+large_qwen:
+  model: "qwen3.6:35b"
+  params: "~35B"
