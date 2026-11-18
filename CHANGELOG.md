@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-18
+
 ### Added
 - **Built-in prompt API** (`zsum.resources`): `iter_builtin_prompts()` yields one frozen `BuiltinPrompt` record per template shipped in the installed package (`slot`, `filename`, `content`, `content_hash`, `schema_version`, `package_version`), sorted by slot; `get_builtin_prompt(slot)` returns one. Downstream tools can bundle the default prompts without depending on the package's file layout.
 - **`zsum setup-model` command**: one-command local LLM configuration for an existing Ollama install. Checks that Ollama is installed and running, pulls a model, writes `config.yaml` with the correct `openai_compat` settings, and verifies the model responds. Four size tiers (small/medium/large/xlarge) are defined in an external `model_tiers.yaml` data file — editable without touching code. Flags: `--size`, `--model` (any Ollama model), `--list`, `--dry-run`.
