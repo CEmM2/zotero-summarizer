@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### Added
+- **Built-in prompt API** (`zsum.resources`): `iter_builtin_prompts()` yields one frozen `BuiltinPrompt` record per template shipped in the installed package (`slot`, `filename`, `content`, `content_hash`, `schema_version`, `package_version`), sorted by slot; `get_builtin_prompt(slot)` returns one. Downstream tools can bundle the default prompts without depending on the package's file layout.
 - **`zsum setup-model` command**: one-command local LLM configuration for an existing [Ollama](https://ollama.com) install. Checks that Ollama is installed and running, pulls a model, writes `config.yaml`, and verifies the model responds. Four size tiers (small/medium/large/xlarge) defined in an external `model_tiers.yaml` — editable without touching code. Flags: `--size`, `--model`, `--list`, `--dry-run`.
 - **Native Codex CLI backend** (`llm.provider: codex_exec`): `zsum` can now use `codex exec` as an LLM provider for cards and digests. The backend shells out through the local Codex CLI, parses JSONL usage/final-message output, and supports configurable `binary`, `model`, `sandbox`, and token limits.
 - **Schema-constrained Codex digests**: Codex-backed collection digests now use `codex exec --output-schema` plus a new structured prompt (`src/zsum/prompts/collection_digest_structured.txt`). `digests.py` validates the structured response and renders the canonical markdown headings itself, keeping digest layout stable.

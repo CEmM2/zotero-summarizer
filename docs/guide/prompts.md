@@ -20,6 +20,33 @@ Templates are resolved through a 3-tier lookup:
 2. **CWD `prompts/` directory** — if you place a template in `./prompts/`, it overrides the package default for that template only.
 3. **Hardcoded fallback** — a minimal built-in default compiled into the source code, used only if the package data is somehow unavailable.
 
+## Reading the Built-in Templates from Python
+
+Tools that build on `zsum` can read the templates the installed package ships through a small public API, instead of relying on where the files sit inside the package:
+
+```python
+from zsum.resources import get_builtin_prompt, iter_builtin_prompts
+
+for prompt in iter_builtin_prompts():
+    print(prompt.slot, prompt.filename, prompt.content_hash)
+
+card = get_builtin_prompt("paper_card")
+text = card.content
+```
+
+Each record is a frozen `BuiltinPrompt` with these fields:
+
+| Field | Meaning |
+|---|---|
+| `slot` | Stable identifier, the filename without `.txt` (for example `paper_card`) |
+| `filename` | The name `load_prompt()` accepts (for example `paper_card.txt`) |
+| `content` | The template text |
+| `content_hash` | `sha256:` followed by the hex SHA-256 digest of `content` (UTF-8) |
+| `schema_version` | Version of the record layout, currently `1` |
+| `package_version` | Installed `zotero-summarizer` version |
+
+Records come back sorted by `slot`. The API returns only what the installed package ships: the `ZSUM_PROMPT_DIR` overlay and a local `prompts/` directory are ignored. `get_builtin_prompt()` raises `KeyError` for an unknown slot.
+
 ## Customizing Templates
 
 Copy the package templates into a local `prompts/` directory and edit:
